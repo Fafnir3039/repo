@@ -2,7 +2,7 @@
 CC = g++
 CFLAGS = -Wall -Wextra
 TARGET = program
-SOURCES = main.cpp sorts.cpp
+SOURCES = sorts.cpp test_sorts.cpp test.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 all: $(TARGET)

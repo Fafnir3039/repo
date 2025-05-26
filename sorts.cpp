@@ -15,7 +15,7 @@ void swap(int& a, int& b) {
 void BubbleSort(int* ar, size_t size, bool (*comp)(int, int)) {
     for (size_t i = 0; i < size-1; i++) {
         for (size_t j = 0; j < size-i-1; j++) {
-            if (comp(ar[j+1], ar[j])) {
+            if (comp(ar[j], ar[j+1])) {
                 swap(ar[j], ar[j+1]);
             }
         }
@@ -26,7 +26,7 @@ void InsertionSort(int* ar, size_t size, bool (*comp)(int, int)) {
     for (size_t i = 1; i < size; i++) {
         int key = ar[i];
         size_t j = i;
-        while (j > 0 && comp(key, ar[j-1])) {
+        while (j > 0 && comp(ar[j-1], key)) {
             ar[j] = ar[j-1];
             j--;
         }
@@ -38,7 +38,7 @@ void SelectionSort(int* ar, size_t size, bool (*comp)(int, int)) {
     for (size_t i = 0; i < size-1; i++) {
         size_t min_idx = i;
         for (size_t j = i+1; j < size; j++) {
-            if (comp(ar[j], ar[min_idx])) {
+            if (comp(ar[min_idx], ar[j])) {
                 min_idx = j;
             }
         }
@@ -51,7 +51,7 @@ void ShellSort(int* ar, size_t size, bool (*comp)(int, int)) {
         for (size_t i = gap; i < size; i++) {
             int temp = ar[i];
             size_t j;
-            for (j = i; j >= gap && comp(temp, ar[j-gap]); j -= gap) {
+            for (j = i; j >= gap && comp(ar[j-gap], temp); j -= gap) {
                 ar[j] = ar[j-gap];
             }
             ar[j] = temp;
@@ -93,7 +93,7 @@ void quickSortHelper(int* ar, size_t left, size_t right, bool (*comp)(int, int))
     if (left < right) {
         size_t pivot = left;
         for (size_t i = left + 1; i <= right; i++) {
-            if (comp(ar[i], ar[left])) {
+            if (comp(ar[left], ar[i])) {
                 pivot++;
                 swap(ar[i], ar[pivot]);
             }
@@ -116,7 +116,7 @@ void quickSortModHelper(int* ar, size_t left, size_t right, bool (*comp)(int, in
         for (size_t i = left+1; i <= right; i++) {
             int key = ar[i];
             size_t j = i;
-            while (j > left && comp(key, ar[j-1])) {
+            while (j > left && comp(ar[j-1], key)) {
                 ar[j] = ar[j-1];
                 j--;
             }
@@ -125,7 +125,7 @@ void quickSortModHelper(int* ar, size_t left, size_t right, bool (*comp)(int, in
     } else if (left < right) {
         size_t pivot = left;
         for (size_t i = left + 1; i <= right; i++) {
-            if (comp(ar[i], ar[left])) {
+            if (comp(ar[left], ar[i])) {
                 pivot++;
                 swap(ar[i], ar[pivot]);
             }
@@ -154,7 +154,7 @@ void merge(int* ar, size_t left, size_t mid, size_t right, bool (*comp)(int, int
     
     size_t i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
-        if (comp(L[i], R[j])) {
+        if (comp(R[j], L[i])) {
             ar[k] = L[i];
             i++;
         } else {
